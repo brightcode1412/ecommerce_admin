@@ -9,7 +9,7 @@ class ProductModel {
   final String name;
   final String price;
   final String nutrition;
-  final num rating;
+ // final num rating;
   final String quantity;
   final bool isBestSeller;
   final bool isOffer;
@@ -23,7 +23,7 @@ class ProductModel {
     required this.name,
     required this.price,
     required this.nutrition,
-    required this.rating,
+  //  required this.rating,
     required this.quantity,
     required this.isBestSeller,
     required this.isOffer,
@@ -52,7 +52,7 @@ class ProductModel {
       name: name ?? this.name,
       price: price ?? this.price,
       nutrition: nutrition ?? this.nutrition,
-      rating: rating ?? this.rating,
+     // rating: rating ?? this.rating,
       quantity: quantity ?? this.quantity,
       isBestSeller: isBestSeller ?? this.isBestSeller,
       isOffer: isOffer ?? this.isOffer,
@@ -69,7 +69,7 @@ class ProductModel {
       'name': name,
       'price': price,
       'nutrition': nutrition,
-      'rating': rating,
+    //  'rating': rating,
       'quantity': quantity,
       'isBestSeller': isBestSeller,
       'isOffer': isOffer,
@@ -86,7 +86,7 @@ class ProductModel {
       name: map['name'] as String,
       price: map['price'] as String,
       nutrition: map['nutrition'] as String,
-      rating: map['rating'] as num,
+   //   rating: map['rating'] as num,
       quantity: map['quantity'] as String,
       isBestSeller: map['isBestSeller'] as bool,
       isOffer: map['isOffer'] as bool,
@@ -103,7 +103,7 @@ class ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(description: $description, imagesUrl: $imagesUrl, name: $name, price: $price, nutrition: $nutrition, rating: $rating, quantity: $quantity, isBestSeller: $isBestSeller, isOffer: $isOffer, purchaseCount: $purchaseCount, producttId: $producttId, category: $categoryName)';
+    return 'ProductModel(description: $description, imagesUrl: $imagesUrl, name: $name, price: $price, nutrition: $nutrition, quantity: $quantity, isBestSeller: $isBestSeller, isOffer: $isOffer, purchaseCount: $purchaseCount, producttId: $producttId, category: $categoryName)';
   }
 
   @override
@@ -115,7 +115,7 @@ class ProductModel {
         other.name == name &&
         other.price == price &&
         other.nutrition == nutrition &&
-        other.rating == rating &&
+       // other.rating == rating &&
         other.quantity == quantity &&
         other.isBestSeller == isBestSeller &&
         other.isOffer == isOffer &&
@@ -131,7 +131,7 @@ class ProductModel {
         name.hashCode ^
         price.hashCode ^
         nutrition.hashCode ^
-        rating.hashCode ^
+      //  rating.hashCode ^
         quantity.hashCode ^
         isBestSeller.hashCode ^
         isOffer.hashCode ^

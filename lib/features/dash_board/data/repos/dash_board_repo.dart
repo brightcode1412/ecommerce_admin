@@ -1,7 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:admin_e_commerce/core/services/firebase_error_handler.dart';
-import 'package:admin_e_commerce/features/home/data/model/product_model.dart';
+import 'package:admin_e_commerce/core/services/firebase_services.dart';
+import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:logger/web.dart';
@@ -10,9 +11,11 @@ class HomeRepo {
   final FirebaseStorage storage = FirebaseStorage.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  final FirebaseServices firebaseServices = FirebaseServices();
+
   Future<void> uploadProduct(ProductModel product) async {
     try {
-      await firestore.collection('products').add(product.toMap());
+      await firebaseServices.productsCollection.add(product.toMap());
 
       Logger().d('Product uploaded to Firestore ${product.toMap()}');
     } on FirebaseException catch (e) {

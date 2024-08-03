@@ -1,30 +1,31 @@
 import 'dart:typed_data';
 
-import 'package:admin_e_commerce/features/home/data/model/product_model.dart';
-import 'package:admin_e_commerce/features/home/data/repos/home_repo.dart';
-import 'package:admin_e_commerce/features/home/logic/cubit/home_state.dart';
+import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
+import 'package:admin_e_commerce/features/dash_board/data/repos/dash_board_repo.dart';
+import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_state.dart';
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
 
-class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitial());
+class DashBoardCubit extends Cubit<DashBoardState> {
+  DashBoardCubit() : super(DashBoardInitial());
 
   final HomeRepo _repository = HomeRepo();
 
   List<String> uploadedUrls = [];
 
   void uploadProduct(ProductModel productmodel) async {
-    emit(HomeUploadProductLoading());
+    emit(DashBoardUploadProductLoading());
     try {
-      if (uploadedUrls.isEmpty) {
-        emit(HomeUploadProductFailed(error: 'No images uploaded'));
-      } else {
-        _repository.uploadProduct(productmodel);
+      // if (uploadedUrls.isEmpty) {
+      //   emit(DashBoardUploadProductFailed(error: 'No images uploaded'));
+      // } else {
+      _repository.uploadProduct(productmodel);
 
-        emit(HomeUploadProductSuccess());
-      }
+      emit(DashBoardUploadProductSuccess());
+      //   }
     } catch (e) {
-      emit(HomeUploadProductFailed(error: e.toString()));
+      print('Error in uploadProduct: $e');
+      emit(DashBoardUploadProductFailed(error: e.toString()));
     }
   }
 
@@ -68,14 +69,14 @@ class HomeCubit extends Cubit<HomeState> {
             uploadProgress: 100,
           ));
         } catch (e) {
-          emit(HomeUploadProductFailed(error: e.toString()));
+          emit(DashBoardUploadProductFailed(error: e.toString()));
         }
       } else {
-        emit(HomeUploadProductFailed(error: 'No files selected'));
+        emit(DashBoardUploadProductFailed(error: 'No files selected'));
       }
     } else {
       // Handle the case where the state is not ImageState
-      emit(HomeUploadProductFailed(error: 'Invalid state'));
+      emit(DashBoardUploadProductFailed(error: 'Invalid state'));
     }
   }
 }

@@ -1,23 +1,20 @@
 import 'package:admin_e_commerce/core/routing/routes.dart';
-import 'package:admin_e_commerce/features/add_image/logic/cubit/image_web_cubit.dart';
-import 'package:admin_e_commerce/features/home/data/repos/home_repo.dart';
-import 'package:admin_e_commerce/features/home/logic/cubit/home_cubit.dart';
-import 'package:admin_e_commerce/features/home/ui/home.dart';
+import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_cubit.dart';
+import 'package:admin_e_commerce/features/dash_board/ui/dash_board_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/add_image/data/repo.dart';
-
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
+    // ignore: unused_local_variable
     final arguments = settings.arguments;
 
     switch (settings.name) {
-      case Routes.homeScreen:
+      case Routes.dashBoardScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => HomeCubit(),
-            child: homeScreen(),
+            create: (context) => DashBoardCubit(),
+            child:  DashBoardScreen(),
           ),
         );
     }

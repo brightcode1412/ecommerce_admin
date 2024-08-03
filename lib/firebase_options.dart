@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB9sBqkzN-rPKJCjCGXVkWbiFWXFCEr9A4',
-    appId: '1:486471468703:web:316aebe489f0105dfe44aa',
-    messagingSenderId: '486471468703',
-    projectId: 'image-test-67470',
-    authDomain: 'image-test-67470.firebaseapp.com',
-    storageBucket: 'image-test-67470.appspot.com',
-    measurementId: 'G-3NCHQGSD9V',
+    apiKey: 'AIzaSyCgPh2P7HWFxOXjKCPLHAiJgQDEeAmtA-w',
+    appId: '1:860264577885:web:0f17c4e8d440c6336dc6b4',
+    messagingSenderId: '860264577885',
+    projectId: 'delishdelivery-16ba1',
+    authDomain: 'delishdelivery-16ba1.firebaseapp.com',
+    storageBucket: 'delishdelivery-16ba1.appspot.com',
+    measurementId: 'G-X0TXQNDH7Y',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD28srEEtevfIZg1R2A0S1ailBGg8BlS8w',
-    appId: '1:486471468703:android:4b5885cffbb933ecfe44aa',
-    messagingSenderId: '486471468703',
-    projectId: 'image-test-67470',
-    storageBucket: 'image-test-67470.appspot.com',
+    apiKey: 'AIzaSyAGT7sSoyWjyJvyJ9-6JhB7QDygxvYIOww',
+    appId: '1:860264577885:android:18eec10c772f7fe46dc6b4',
+    messagingSenderId: '860264577885',
+    projectId: 'delishdelivery-16ba1',
+    storageBucket: 'delishdelivery-16ba1.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD3IkFYCHANkUcsjI2PBULCJCVpAJAE8Ks',
-    appId: '1:486471468703:ios:e758e7bd3c46d5a6fe44aa',
-    messagingSenderId: '486471468703',
-    projectId: 'image-test-67470',
-    storageBucket: 'image-test-67470.appspot.com',
-    iosBundleId: 'com.example.appImageWebTest',
+    apiKey: 'AIzaSyAUynhIQdjObxa47D2KUmscKC023U5S3g4',
+    appId: '1:860264577885:ios:f733a9a67e3a52a26dc6b4',
+    messagingSenderId: '860264577885',
+    projectId: 'delishdelivery-16ba1',
+    storageBucket: 'delishdelivery-16ba1.appspot.com',
+    iosBundleId: 'com.example.adminECommerce',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD3IkFYCHANkUcsjI2PBULCJCVpAJAE8Ks',
-    appId: '1:486471468703:ios:3d04ebe650678e5bfe44aa',
-    messagingSenderId: '486471468703',
-    projectId: 'image-test-67470',
-    storageBucket: 'image-test-67470.appspot.com',
-    iosBundleId: 'com.example.appImageWebTest.RunnerTests',
+    apiKey: 'AIzaSyAUynhIQdjObxa47D2KUmscKC023U5S3g4',
+    appId: '1:860264577885:ios:0925251fb1e6ce286dc6b4',
+    messagingSenderId: '860264577885',
+    projectId: 'delishdelivery-16ba1',
+    storageBucket: 'delishdelivery-16ba1.appspot.com',
+    iosBundleId: 'com.example.adminECommerce.RunnerTests',
   );
 }
