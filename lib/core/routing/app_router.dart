@@ -15,7 +15,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => ImageCubit(ImageRepository()),
-            child: const homeScreen(),
+            child: homeScreen(),
           ),
         );
     }
