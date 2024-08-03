@@ -1,4 +1,6 @@
 import 'package:admin_e_commerce/features/add_image/logic/cubit/image_web_cubit.dart';
+import 'package:admin_e_commerce/features/home/logic/cubit/home_cubit.dart';
+import 'package:admin_e_commerce/features/home/logic/cubit/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -12,61 +14,77 @@ class homeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Upload product')),
-      body: BlocBuilder<ImageCubit, ImageState>(
+      body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
+          if (state is ImageState) {
+            final imageState = state;
+            if (imageState.isLoading) {
+              LinearPercentIndicator(
+                lineHeight: 14.0,
+                percent: (imageState.uploadProgress / 100).clamp(0.0, 1.0),
+                center: Text('${imageState.uploadProgress}%'),
+                linearStrokeCap: LinearStrokeCap.roundAll,
+                progressColor: Colors.blue,
+              );
+            }
+            if (!imageState.isLoading && imageState.images.isEmpty) {
+              ElevatedButton(
+                onPressed: () => context.read<HomeCubit>().uploadImages(),
+                child: const Text('Select Images'),
+              );
+            }
+            return Row(
+              children: [
+                ...state.images.asMap().entries.map((e) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Stack(
+                        children: [
+                          Image.memory(
+                            e.value,
+                            width: 100,
+                            height: 100,
+                          ),
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: IconButton(
+                                icon: const Icon(Icons.close), onPressed: () {}
+                                // context.read<ImageCubit>().removeImage(e.key),
+                                ),
+                          ),
+                        ],
+                      ),
+                    )),
+              ],
+            );
+          }
           return Column(
             children: [
-              if (state.isLoading)
-                LinearPercentIndicator(
-                  lineHeight: 14.0,
-                  percent: (state.uploadProgress / 100).clamp(0.0, 1.0),
-                  center: Text('${state.uploadProgress}%'),
-                  linearStrokeCap: LinearStrokeCap.roundAll,
-                  progressColor: Colors.blue,
-                ),
-              if (!state.isLoading && state.images.isEmpty)
-                ElevatedButton(
-                  onPressed: () => context.read<ImageCubit>().selectFiles(),
-                  child: const Text('Select Images'),
-                ),
-
-              // ListView.builder(
-              //   scrollDirection: Axis.horizontal,
-              //   itemCount: state.uploadedUrls.length,
-              //   itemBuilder: (context, index) {
-              //     return Image.network(
-              //       state.uploadedUrls[index],
-              //       width: 100,
-              //       height: 100,
-              //     );
-              //   },
+              // Row(
+              //   children: [
+              //     ...state.images.asMap().entries.map((e) => Padding(
+              //           padding: const EdgeInsets.all(8.0),
+              //           child: Stack(
+              //             children: [
+              //               Image.memory(
+              //                 e.value,
+              //                 width: 100,
+              //                 height: 100,
+              //               ),
+              //               Positioned(
+              //                 right: 0,
+              //                 top: 0,
+              //                 child: IconButton(
+              //                     icon: const Icon(Icons.close),
+              //                     onPressed: () {}
+              //                     // context.read<ImageCubit>().removeImage(e.key),
+              //                     ),
+              //               ),
+              //             ],
+              //           ),
+              //         )),
+              //   ],
               // ),
-              // drop down to select catogry name
-              Row(
-                children: [
-                  ...state.images.asMap().entries.map((e) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Stack(
-                          children: [
-                            Image.memory(
-                              e.value,
-                              width: 100,
-                              height: 100,
-                            ),
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              child: IconButton(
-                                  icon: const Icon(Icons.close),
-                                  onPressed: () {}
-                                  // context.read<ImageCubit>().removeImage(e.key),
-                                  ),
-                            ),
-                          ],
-                        ),
-                      )),
-                ],
-              ),
               const SizedBox(
                 height: 20,
               ),
