@@ -182,7 +182,7 @@
 // }
 
 import 'dart:typed_data';
-import 'package:admin_e_commerce/add_image/data/repo.dart';
+import 'package:admin_e_commerce/features/add_image/data/repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
 

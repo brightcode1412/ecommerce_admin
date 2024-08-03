@@ -61,8 +61,6 @@
 //   }
 // }
 
-
-
 // import 'package:app_image_web_test/add_image/data/repo.dart';
 // import 'package:app_image_web_test/add_image/logic/cubit/image_web_cubit.dart';
 // import 'package:app_image_web_test/firebase_options.dart';
@@ -131,9 +129,6 @@
 //   }
 // }
 
-
-
-
 // import 'package:app_image_web_test/add_image/data/repo.dart';
 // import 'package:app_image_web_test/add_image/logic/cubit/image_web_cubit.dart';
 // import 'package:app_image_web_test/firebase_options.dart';
@@ -196,7 +191,6 @@
 //     );
 //   }
 // }
-
 
 // import 'package:app_image_web_test/add_image/data/repo.dart';
 // import 'package:app_image_web_test/add_image/logic/cubit/image_web_cubit.dart';
@@ -268,11 +262,10 @@
 //   }
 // }
 
-
-
-
-import 'package:admin_e_commerce/add_image/data/repo.dart';
-import 'package:admin_e_commerce/add_image/logic/cubit/image_web_cubit.dart';
+import 'package:admin_e_commerce/core/routing/app_router.dart';
+import 'package:admin_e_commerce/core/routing/routes.dart';
+import 'package:admin_e_commerce/features/add_image/data/repo.dart';
+import 'package:admin_e_commerce/features/add_image/logic/cubit/image_web_cubit.dart';
 import 'package:admin_e_commerce/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -284,26 +277,28 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BlocProvider(
-        create: (context) => ImageCubit(ImageRepository()),
-        child: ImageUploadScreen(),
-      ),
+      initialRoute: Routes.homeScreen,
+      onGenerateRoute: AppRouter().generateRoute,
     );
   }
 }
 
 class ImageUploadScreen extends StatelessWidget {
+  const ImageUploadScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Upload Images')),
+      appBar: AppBar(title: const Text('Upload Images')),
       body: BlocBuilder<ImageCubit, ImageState>(
         builder: (context, state) {
           return Column(
@@ -319,7 +314,7 @@ class ImageUploadScreen extends StatelessWidget {
               if (!state.isLoading && state.images.isEmpty)
                 ElevatedButton(
                   onPressed: () => context.read<ImageCubit>().selectFiles(),
-                  child: Text('Select Images'),
+                  child: const Text('Select Images'),
                 ),
               Expanded(
                 child: ListView.builder(
