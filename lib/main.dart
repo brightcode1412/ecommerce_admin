@@ -292,46 +292,46 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ImageUploadScreen extends StatelessWidget {
-  const ImageUploadScreen({super.key});
+// class ImageUploadScreen extends StatelessWidget {
+//   const ImageUploadScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Upload Images')),
-      body: BlocBuilder<ImageCubit, ImageState>(
-        builder: (context, state) {
-          return Column(
-            children: [
-              if (state.isLoading)
-                LinearPercentIndicator(
-                  lineHeight: 14.0,
-                  percent: (state.uploadProgress / 100).clamp(0.0, 1.0),
-                  center: Text('${state.uploadProgress}%'),
-                  linearStrokeCap: LinearStrokeCap.roundAll,
-                  progressColor: Colors.blue,
-                ),
-              if (!state.isLoading && state.images.isEmpty)
-                ElevatedButton(
-                  onPressed: () => context.read<ImageCubit>().selectFiles(),
-                  child: const Text('Select Images'),
-                ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: state.uploadedUrls.length,
-                  itemBuilder: (context, index) {
-                    return Image.network(
-                      state.uploadedUrls[index],
-                      width: 100,
-                      height: 100,
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text('Upload Images')),
+//       body: BlocBuilder<ImageCubit, ImageState>(
+//         builder: (context, state) {
+//           return Column(
+//             children: [
+//               if (state.isLoading)
+//                 LinearPercentIndicator(
+//                   lineHeight: 14.0,
+//                   percent: (state.uploadProgress / 100).clamp(0.0, 1.0),
+//                   center: Text('${state.uploadProgress}%'),
+//                   linearStrokeCap: LinearStrokeCap.roundAll,
+//                   progressColor: Colors.blue,
+//                 ),
+//               if (!state.isLoading && state.images.isEmpty)
+//                 ElevatedButton(
+//                   onPressed: () => context.read<ImageCubit>().selectFiles(),
+//                   child: const Text('Select Images'),
+//                 ),
+//               Expanded(
+//                 child: ListView.builder(
+//                   itemCount: state.uploadedUrls.length,
+//                   itemBuilder: (context, index) {
+//                     return Image.network(
+//                       state.uploadedUrls[index],
+//                       width: 100,
+//                       height: 100,
+//                     );
+//                   },
+//                 ),
+//               ),
+//             ],
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

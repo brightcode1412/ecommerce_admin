@@ -181,85 +181,85 @@
 //   }
 // }
 
-import 'dart:typed_data';
-import 'package:admin_e_commerce/features/add_image/data/repo.dart';
-import 'package:bloc/bloc.dart';
-import 'package:file_picker/file_picker.dart';
+// import 'dart:typed_data';
+// import 'package:admin_e_commerce/features/add_image/data/repo.dart';
+// import 'package:bloc/bloc.dart';
+// import 'package:file_picker/file_picker.dart';
 
-class ImageState {
-  final bool isLoading;
-  final List<Uint8List> images;
-  final List<String> uploadedUrls;
-  final int uploadProgress;
+// class ImageState {
+//   final bool isLoading;
+//   final List<Uint8List> images;
+//   final List<String> uploadedUrls;
+//   final int uploadProgress;
 
-  ImageState({
-    required this.isLoading,
-    required this.images,
-    required this.uploadedUrls,
-    required this.uploadProgress,
-  });
-}
+//   ImageState({
+//     required this.isLoading,
+//     required this.images,
+//     required this.uploadedUrls,
+//     required this.uploadProgress,
+//   });
+// }
 
-class ImageCubit extends Cubit<ImageState> {
-  final ImageRepository repository;
+// class ImageCubit extends Cubit<ImageState> {
+//   final ImageRepository repository;
 
-  ImageCubit(this.repository)
-      : super(ImageState(
-            isLoading: false, images: [], uploadedUrls: [], uploadProgress: 0));
+//   ImageCubit(this.repository)
+//       : super(ImageState(
+//             isLoading: false, images: [], uploadedUrls: [], uploadProgress: 0));
 
-  void selectFiles() async {
-    emit(ImageState(
-        isLoading: true,
-        images: state.images,
-        uploadedUrls: state.uploadedUrls,
-        uploadProgress: 0));
-    final result = await FilePicker.platform
-        .pickFiles(allowMultiple: true, withData: true);
-    if (result != null) {
-      final images = result.files.map((file) => file.bytes!).toList();
-      emit(ImageState(
-          isLoading: false,
-          images: images,
-          uploadedUrls: state.uploadedUrls,
-          uploadProgress: 0));
-      uploadFiles();
-    } else {
-      emit(ImageState(
-          isLoading: false,
-          images: state.images,
-          uploadedUrls: state.uploadedUrls,
-          uploadProgress: 0));
-    }
-  }
+//   void selectFiles() async {
+//     emit(ImageState(
+//         isLoading: true,
+//         images: state.images,
+//         uploadedUrls: state.uploadedUrls,
+//         uploadProgress: 0));
+//     final result = await FilePicker.platform
+//         .pickFiles(allowMultiple: true, withData: true);
+//     if (result != null) {
+//       final images = result.files.map((file) => file.bytes!).toList();
+//       emit(ImageState(
+//           isLoading: false,
+//           images: images,
+//           uploadedUrls: state.uploadedUrls,
+//           uploadProgress: 0));
+//       uploadFiles();
+//     } else {
+//       emit(ImageState(
+//           isLoading: false,
+//           images: state.images,
+//           uploadedUrls: state.uploadedUrls,
+//           uploadProgress: 0));
+//     }
+//   }
 
-  void uploadFiles() async {
-    emit(ImageState(
-        isLoading: true,
-        images: state.images,
-        uploadedUrls: state.uploadedUrls,
-        uploadProgress: 0));
-    try {
-      final uploadedUrls =
-          await repository.uploadImages(state.images, (progress) {
-        print('Upload progress: $progress%');
-        emit(ImageState(
-            isLoading: true,
-            images: state.images,
-            uploadedUrls: state.uploadedUrls,
-            uploadProgress: progress));
-      });
-      emit(ImageState(
-          isLoading: false,
-          images: [],
-          uploadedUrls: uploadedUrls,
-          uploadProgress: 100));
-    } catch (e) {
-      print('Error in uploadFiles: $e');
-      emit(ImageState(
-          isLoading: false,
-          images: state.images,
-          uploadedUrls: state.uploadedUrls,
-          uploadProgress: 0));
-    }
-  }
-}
+//   void uploadFiles() async {
+//     emit(ImageState(
+//         isLoading: true,
+//         images: state.images,
+//         uploadedUrls: state.uploadedUrls,
+//         uploadProgress: 0));
+//     try {
+//       final uploadedUrls =
+//           await repository.uploadImages(state.images, (progress) {
+//         print('Upload progress: $progress%');
+//         emit(ImageState(
+//             isLoading: true,
+//             images: state.images,
+//             uploadedUrls: state.uploadedUrls,
+//             uploadProgress: progress));
+//       });
+//       emit(ImageState(
+//           isLoading: false,
+//           images: [],
+//           uploadedUrls: uploadedUrls,
+//           uploadProgress: 100));
+//     } catch (e) {
+//       print('Error in uploadFiles: $e');
+//       emit(ImageState(
+//           isLoading: false,
+//           images: state.images,
+//           uploadedUrls: state.uploadedUrls,
+//           uploadProgress: 0));
+//     }
+//   }
+// }
