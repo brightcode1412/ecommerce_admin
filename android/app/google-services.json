@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "860264577885",
+    "project_id": "delishdelivery-16ba1",
+    "storage_bucket": "delishdelivery-16ba1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860264577885:android:18eec10c772f7fe46dc6b4",
+        "android_client_info": {
+          "package_name": "com.example.admin_e_commerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGT7sSoyWjyJvyJ9-6JhB7QDygxvYIOww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860264577885:android:5b6ba37ce8fd18da6dc6b4",
+        "android_client_info": {
+          "package_name": "com.example.e_commerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGT7sSoyWjyJvyJ9-6JhB7QDygxvYIOww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
