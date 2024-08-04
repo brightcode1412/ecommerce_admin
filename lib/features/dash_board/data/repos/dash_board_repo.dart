@@ -69,8 +69,6 @@ class HomeRepo {
         downloadUrls.add(downloadUrl);
         print('Download URL: $downloadUrl');
       }
-      await firestore.collection('images').add({'urls': downloadUrls});
-      print('Image URLs added to Firestore');
       return downloadUrls;
     } catch (e) {
       print('Error in uploadImages: $e');
