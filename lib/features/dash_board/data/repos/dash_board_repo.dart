@@ -15,21 +15,22 @@ class HomeRepo {
   final FirebaseServices firebaseServices = FirebaseServices();
 
   Future<void> uploadProduct(ProductModel product) async {
-    try {
-      // get documnet id from the collection
-      String documentId = firebaseServices.productsCollection.doc().id;
+  try {
+    // Generate a new document reference
+    var produceDocRef = firebaseServices.productsCollection.doc();
 
-      await firebaseServices.productsCollection
-          .add(product.copyWith(producttId: documentId).toMap());
+    // Set the document with the generated ID
+    await produceDocRef.set(product.copyWith(producttId: produceDocRef.id).toMap());
 
-      Logger().d('Product uploaded to Firestore ${product.toMap()}');
-    } on FirebaseException catch (e) {
-      Logger().e('Error in uploadProduct: $e');
-      throw FirebaseNetworkException.errorHandler(e);
-    } catch (e) {
-      Logger().e('Error in uploadProduct: $e');
-    }
+    Logger().d('Product uploaded to Firestore ${product.toMap()}');
+  } on FirebaseException catch (e) {
+    Logger().e('Error in uploadProduct: $e');
+    throw FirebaseNetworkException.errorHandler(e);
+  } catch (e) {
+    Logger().e('Error in uploadProduct: $e');
   }
+}
+
 
   Future<List<Uint8List>> pickImages() async {
     // Pick files
