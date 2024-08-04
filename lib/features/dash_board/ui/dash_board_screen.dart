@@ -7,41 +7,87 @@ import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_stat
 import 'package:admin_e_commerce/features/dash_board/ui/widgets/custom_appbar_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/web.dart';
 
-class DashBoardScreen extends StatefulWidget {
+class DashBoardScreen extends StatelessWidget {
   const DashBoardScreen({super.key});
 
   @override
-  State<DashBoardScreen> createState() => _DashBoardScreenState();
-}
-
-class _DashBoardScreenState extends State<DashBoardScreen> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<DashBoardCubit, DashBoardState>(
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                const CustomAppBarWeb(
-                  title: 'Delish Delivery Admin',
-                ),
-                Text(
-                  'Add Product',
-                  style: AppStyles.eduAUVICWANTHand700(context).copyWith(
-                    color: AppColor.blackColor,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const AddingProductBody(),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const CustomAppBarWeb(
+              title: 'Delish Delivery Admin',
             ),
-          );
-        },
+            Text(
+              'Add Product',
+              style: AppStyles.eduAUVICWANTHand700(context).copyWith(
+                color: AppColor.blackColor,
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            BlocConsumer<DashBoardCubit, DashBoardState>(
+              listener: (context, state) {
+                if (state is ImageUploadFailed) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Image Upload Failed'),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                var cubit = DashBoardCubit.get(context);
+                return state is ImageLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: AppColor.green75Color,
+                          value: (state).uploadProgress,
+                        ),
+                      )
+                    : state is ImageUploadSuccess ||
+                            state is DashBoardUploadProductLoading
+                        ? Center(
+                            child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: cubit.images.map((image) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  radius: 50,
+                                  foregroundImage: MemoryImage(image),
+                                ),
+                              );
+                            }).toList(),
+                          ))
+// default ال
+                        : CustomAppButton(
+                            backgroundColor: state is ImageLoading
+                                ? AppColor.grey64Color
+                                : AppColor.green75Color,
+                            width: MediaQuery.sizeOf(context).width * .1,
+                            height: 36,
+                            onPressed: state is ImageLoading
+                                ? () {}
+                                : () {
+                                    context.read<DashBoardCubit>().pickImages();
+                                  },
+                            child: const Text('Upload Images'));
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const AddingProductBody(),
+          ],
+        ),
       ),
     );
   }
@@ -56,27 +102,30 @@ class AddingProductBody extends StatefulWidget {
 
 class _AddingProductBodyState extends State<AddingProductBody> {
   static final List<String> _categories = [
-    'Electronics',
-    'Books',
-    'Clothing',
-    'Home'
+    'Vegetable',
+    'Cooking Oil',
+    'Meat & Fish',
+    'Bakery & Snacks',
+    'Beverages',
   ];
 
   static final List<String> _booleanOptions = ['true', 'false'];
 
-  String? _selectedCategory;
-  String? _selectedIsOffer;
+  String? _selectedCategory = 'Vegetable';
+
+  String _selectedIsOffer = 'false';
+
   final _formKey = GlobalKey<FormState>();
   final _productNameController = TextEditingController();
   final _productDescriptionController = TextEditingController();
   final _productPriceController = TextEditingController();
   final _productNutritionController = TextEditingController();
-  final _productRatingController = TextEditingController();
+  // final _productRatingController = TextEditingController();
   final _productQuantityController = TextEditingController();
-  final _productIsBestSellerController = TextEditingController();
-  final _productPurchaseCountController = TextEditingController();
-  final _productProductIdController = TextEditingController();
-  final _productCategoryNameController = TextEditingController();
+  // final _productIsBestSellerController = TextEditingController();
+  // final _productPurchaseCountController = TextEditingController();
+  // final _productProductIdController = TextEditingController();
+  // final _productCategoryNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +152,12 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                         child: CustomTextFromFieldText(
                           controller: _productNameController,
                           labelText: 'Product Name',
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Product Name cannot be empty';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                       const SizedBox(width: 20),
@@ -110,6 +165,12 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                         child: CustomTextFromFieldText(
                           controller: _productDescriptionController,
                           labelText: 'Product Description',
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Product Description cannot be empty';
+                            }
+                            return null;
+                          },
                         ),
                       )
                     ],
@@ -120,6 +181,13 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                         child: CustomTextFromFieldText(
                           controller: _productPriceController,
                           labelText: 'Product Price',
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Product Price cannot be empty';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                       const SizedBox(width: 20),
@@ -127,50 +195,11 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                         child: CustomTextFromFieldText(
                           controller: _productNutritionController,
                           labelText: 'Product Nutrition',
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomTextFromFieldText(
-                          controller: _productRatingController,
-                          labelText: 'Product Rating',
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: CustomTextFromFieldText(
-                          controller: _productQuantityController,
-                          labelText: 'Product Quantity',
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomTextFromFieldText(
-                          controller: _productIsBestSellerController,
-                          labelText: 'Is Best Seller',
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: DropdownButton<String>(
-                          value: _selectedIsOffer,
-                          hint: const Text('Is Offer'),
-                          items: _booleanOptions.map((String option) {
-                            return DropdownMenuItem<String>(
-                              value: option,
-                              child: Text(option),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectedIsOffer = newValue;
-                            });
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Product Nutrition cannot be empty';
+                            }
+                            return null;
                           },
                         ),
                       )
@@ -180,25 +209,15 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                     children: [
                       Expanded(
                         child: CustomTextFromFieldText(
-                          controller: _productPurchaseCountController,
-                          labelText: 'Purchase Count',
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: CustomTextFromFieldText(
-                          controller: _productProductIdController,
-                          labelText: 'Product ID',
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomTextFromFieldText(
-                          controller: _productCategoryNameController,
-                          labelText: 'Category Name',
+                          controller: _productQuantityController,
+                          labelText: 'Product Quantity',
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Product Quantity cannot be empty';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                       const SizedBox(width: 20),
@@ -215,9 +234,40 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                           onChanged: (String? newValue) {
                             setState(() {
                               _selectedCategory = newValue;
+                              Logger()
+                                  .d('Selected Category: $_selectedCategory');
                             });
                           },
+                          isExpanded: true,
                         ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Is Offer :   ',
+                        style: AppStyles.eduAUVICWANTHand700(context)
+                            .copyWith(color: AppColor.blackColor, fontSize: 16),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      DropdownButton<String>(
+                        value: _selectedIsOffer,
+                        hint: const Text('Is Offer'),
+                        items: _booleanOptions.map((String option) {
+                          return DropdownMenuItem<String>(
+                            value: option,
+                            child: Text(option),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedIsOffer = newValue!;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -234,24 +284,20 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                               isOffer:
                                   _selectedIsOffer == 'true' ? true : false,
 
-                              imagesUrl: [
-                                'sadsadasd',
-                                'sadsadasd',
-                                'sadsadasd',
-                              ],
+                              imagesUrl: [],
                               name: _productNameController.text.trim(),
                               description:
                                   _productDescriptionController.text.trim(),
                               price: _productPriceController.text.trim(),
                               nutrition:
                                   _productNutritionController.text.trim(),
-                              //  rating: _productRatingController.text.trim(),
+                              rating: 1.0,
                               quantity: _productQuantityController.text.trim(),
-                              isBestSeller: true,
-                              purchaseCount: 55,
+                              // isBestSeller: true,
+                              purchaseCount: 1,
                               producttId: '',
-                              categoryName:
-                                  _productCategoryNameController.text.trim(),
+                              categoryName: _selectedCategory,
+                              // _productCategoryNameController.text.trim(),
                             );
 
                             if (_formKey.currentState!.validate()) {
@@ -270,23 +316,26 @@ class _AddingProductBodyState extends State<AddingProductBody> {
 
 class CustomTextFromFieldText extends StatelessWidget {
   const CustomTextFromFieldText(
-      {super.key, required this.labelText, this.controller});
+      {super.key,
+      required this.labelText,
+      this.controller,
+      this.keyboardType,
+      required this.validator});
 
   final TextEditingController? controller;
   final String labelText;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       cursorColor: AppColor.green75Color,
+      keyboardType: keyboardType,
+      // maxLines: ,
       decoration: InputDecoration(labelText: labelText),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter a product name';
-        }
-        return null;
-      },
+      validator: validator,
     );
   }
 }
