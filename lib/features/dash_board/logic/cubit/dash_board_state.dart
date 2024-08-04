@@ -16,16 +16,35 @@ final class DashBoardUploadProductFailed extends DashBoardState {
   });
 }
 
-class ImageState extends DashBoardState {
-  final bool isLoading;
-  final List<Uint8List> images;
-  final List<String> uploadedUrls;
-  final int uploadProgress;
+final class ImageLoading extends DashBoardState {
+  final double uploadProgress;
 
-  ImageState({
-    required this.isLoading,
-    required this.images,
-    required this.uploadedUrls,
-    required this.uploadProgress,
-  });
+  ImageLoading(this.uploadProgress);
 }
+
+final class ImageUploadSuccess extends DashBoardState {
+  ImageUploadSuccess();
+}
+
+final class ImageUploadFailed extends DashBoardState {
+  final String message;
+
+  ImageUploadFailed(this.message);
+}
+
+
+
+
+// class ImageState extends DashBoardState {
+//   final bool isLoading;
+//   final List<Uint8List> images;
+//   final List<String> uploadedUrls;
+//   final int uploadProgress;
+
+//   ImageState({
+//     required this.isLoading,
+//     required this.images,
+//     required this.uploadedUrls,
+//     required this.uploadProgress,
+//   });
+// }

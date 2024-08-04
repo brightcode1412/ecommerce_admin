@@ -9,9 +9,9 @@ class ProductModel {
   final String name;
   final String price;
   final String nutrition;
- // final num rating;
+  final num rating;
   final String quantity;
-  final bool isBestSeller;
+  // final bool isBestSeller;
   final bool isOffer;
   final num purchaseCount;
   final String producttId;
@@ -23,9 +23,8 @@ class ProductModel {
     required this.name,
     required this.price,
     required this.nutrition,
-  //  required this.rating,
+    required this.rating,
     required this.quantity,
-    required this.isBestSeller,
     required this.isOffer,
     required this.purchaseCount,
     required this.producttId,
@@ -40,11 +39,10 @@ class ProductModel {
     String? nutrition,
     num? rating,
     String? quantity,
-    bool? isBestSeller,
     bool? isOffer,
     num? purchaseCount,
     String? producttId,
-    String? category,
+    String? categoryName,
   }) {
     return ProductModel(
       description: description ?? this.description,
@@ -52,13 +50,12 @@ class ProductModel {
       name: name ?? this.name,
       price: price ?? this.price,
       nutrition: nutrition ?? this.nutrition,
-     // rating: rating ?? this.rating,
+      rating: rating ?? this.rating,
       quantity: quantity ?? this.quantity,
-      isBestSeller: isBestSeller ?? this.isBestSeller,
       isOffer: isOffer ?? this.isOffer,
       purchaseCount: purchaseCount ?? this.purchaseCount,
       producttId: producttId ?? this.producttId,
-      categoryName: category ?? categoryName,
+      categoryName: categoryName ?? this.categoryName,
     );
   }
 
@@ -69,30 +66,29 @@ class ProductModel {
       'name': name,
       'price': price,
       'nutrition': nutrition,
-    //  'rating': rating,
+      'rating': rating,
       'quantity': quantity,
-      'isBestSeller': isBestSeller,
       'isOffer': isOffer,
       'purchaseCount': purchaseCount,
       'producttId': producttId,
-      'category': categoryName,
+      'categoryName': categoryName,
     };
   }
 
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
       description: map['description'] as String,
-      imagesUrl: List<String>.from((map['imagesUrl'] as List<dynamic>)),
+      imagesUrl: List<String>.from((map['imagesUrl'] as List<String>)),
       name: map['name'] as String,
       price: map['price'] as String,
       nutrition: map['nutrition'] as String,
-   //   rating: map['rating'] as num,
+      rating: map['rating'] as num,
       quantity: map['quantity'] as String,
-      isBestSeller: map['isBestSeller'] as bool,
       isOffer: map['isOffer'] as bool,
       purchaseCount: map['purchaseCount'] as num,
       producttId: map['producttId'] as String,
-      categoryName: map['category'] != null ? map['category'] as String : null,
+      categoryName:
+          map['categoryName'] != null ? map['categoryName'] as String : null,
     );
   }
 
@@ -103,7 +99,7 @@ class ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(description: $description, imagesUrl: $imagesUrl, name: $name, price: $price, nutrition: $nutrition, quantity: $quantity, isBestSeller: $isBestSeller, isOffer: $isOffer, purchaseCount: $purchaseCount, producttId: $producttId, category: $categoryName)';
+    return 'ProductModel(description: $description, imagesUrl: $imagesUrl, name: $name, price: $price, nutrition: $nutrition, rating: $rating, quantity: $quantity, isOffer: $isOffer, purchaseCount: $purchaseCount, producttId: $producttId, categoryName: $categoryName)';
   }
 
   @override
@@ -115,9 +111,8 @@ class ProductModel {
         other.name == name &&
         other.price == price &&
         other.nutrition == nutrition &&
-       // other.rating == rating &&
+        other.rating == rating &&
         other.quantity == quantity &&
-        other.isBestSeller == isBestSeller &&
         other.isOffer == isOffer &&
         other.purchaseCount == purchaseCount &&
         other.producttId == producttId &&
@@ -131,9 +126,8 @@ class ProductModel {
         name.hashCode ^
         price.hashCode ^
         nutrition.hashCode ^
-      //  rating.hashCode ^
+        rating.hashCode ^
         quantity.hashCode ^
-        isBestSeller.hashCode ^
         isOffer.hashCode ^
         purchaseCount.hashCode ^
         producttId.hashCode ^
