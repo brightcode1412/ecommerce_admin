@@ -4,7 +4,9 @@ import 'package:admin_e_commerce/core/widgets/custom_app_button.dart';
 import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
 import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_cubit.dart';
 import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_state.dart';
+import 'package:admin_e_commerce/features/dash_board/ui/widgets/adding_product_body.dart';
 import 'package:admin_e_commerce/features/dash_board/ui/widgets/custom_appbar_web.dart';
+import 'package:admin_e_commerce/features/dash_board/ui/widgets/custom_text_form_field_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/web.dart';
@@ -310,32 +312,6 @@ class _AddingProductBodyState extends State<AddingProductBody> {
           ),
         );
       },
-    );
-  }
-}
-
-class CustomTextFromFieldText extends StatelessWidget {
-  const CustomTextFromFieldText(
-      {super.key,
-      required this.labelText,
-      this.controller,
-      this.keyboardType,
-      required this.validator});
-
-  final TextEditingController? controller;
-  final String labelText;
-  final TextInputType? keyboardType;
-  final String? Function(String?)? validator;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      cursorColor: AppColor.green75Color,
-      keyboardType: keyboardType,
-      // maxLines: ,
-      decoration: InputDecoration(labelText: labelText),
-      validator: validator,
     );
   }
 }
