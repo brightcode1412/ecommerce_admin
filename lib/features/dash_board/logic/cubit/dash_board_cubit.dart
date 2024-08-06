@@ -4,8 +4,7 @@ import 'package:admin_e_commerce/core/services/failure.dart';
 import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
 import 'package:admin_e_commerce/features/dash_board/data/repos/dash_board_repo.dart';
 import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_state.dart';
-import 'package:bloc/bloc.dart';
-import 'package:file_picker/file_picker.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/web.dart';
 
@@ -21,7 +20,7 @@ class DashBoardCubit extends Cubit<DashBoardState> {
     emit(DashBoardUploadProductLoading());
     try {
       if (uploadedUrls.isEmpty) {
-        emit(ImageUploadFailed('No images uploaded'));
+        emit(DashBoardUploadProductFailed(error: 'No images uploaded'));
       } else {
         await _repository.uploadProduct(productmodel.copyWith(
           imagesUrl: uploadedUrls,
@@ -74,4 +73,3 @@ class DashBoardCubit extends Cubit<DashBoardState> {
   //     emit(ImageUploadFailed(e.toString()));
   //   }
   // }
-

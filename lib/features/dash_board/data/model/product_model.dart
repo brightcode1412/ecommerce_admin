@@ -8,10 +8,11 @@ class ProductModel {
   final List<String> imagesUrl;
   final String name;
   final String price;
-  final String nutrition;
+  final String weight;
   final num rating;
   final String quantity;
-  // final bool isBestSeller;
+  final int ratingCount;
+
   final bool isOffer;
   final num purchaseCount;
   final String producttId;
@@ -22,13 +23,14 @@ class ProductModel {
     required this.imagesUrl,
     required this.name,
     required this.price,
-    required this.nutrition,
+    required this.weight,
     required this.rating,
     required this.quantity,
     required this.isOffer,
     required this.purchaseCount,
     required this.producttId,
     required this.categoryName,
+    this.ratingCount = 0,
   });
 
   ProductModel copyWith({
@@ -36,7 +38,7 @@ class ProductModel {
     List<String>? imagesUrl,
     String? name,
     String? price,
-    String? nutrition,
+    String? weight,
     num? rating,
     String? quantity,
     bool? isOffer,
@@ -49,7 +51,7 @@ class ProductModel {
       imagesUrl: imagesUrl ?? this.imagesUrl,
       name: name ?? this.name,
       price: price ?? this.price,
-      nutrition: nutrition ?? this.nutrition,
+      weight: weight ?? this.weight,
       rating: rating ?? this.rating,
       quantity: quantity ?? this.quantity,
       isOffer: isOffer ?? this.isOffer,
@@ -65,7 +67,7 @@ class ProductModel {
       'imagesUrl': imagesUrl,
       'name': name,
       'price': price,
-      'nutrition': nutrition,
+      'weight': weight,
       'rating': rating,
       'quantity': quantity,
       'isOffer': isOffer,
@@ -78,10 +80,10 @@ class ProductModel {
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
       description: map['description'] as String,
-      imagesUrl: List<String>.from((map['imagesUrl'] as List<String>)),
+      imagesUrl: List<String>.from((map['imagesUrl'] as List<dynamic>)),
       name: map['name'] as String,
       price: map['price'] as String,
-      nutrition: map['nutrition'] as String,
+      weight: map['weight'] as String,
       rating: map['rating'] as num,
       quantity: map['quantity'] as String,
       isOffer: map['isOffer'] as bool,
@@ -99,7 +101,7 @@ class ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(description: $description, imagesUrl: $imagesUrl, name: $name, price: $price, nutrition: $nutrition, rating: $rating, quantity: $quantity, isOffer: $isOffer, purchaseCount: $purchaseCount, producttId: $producttId, categoryName: $categoryName)';
+    return 'ProductModel(description: $description, imagesUrl: $imagesUrl, name: $name, price: $price, weight: $weight, rating: $rating, quantity: $quantity, isOffer: $isOffer, purchaseCount: $purchaseCount, producttId: $producttId, categoryName: $categoryName)';
   }
 
   @override
@@ -110,7 +112,7 @@ class ProductModel {
         listEquals(other.imagesUrl, imagesUrl) &&
         other.name == name &&
         other.price == price &&
-        other.nutrition == nutrition &&
+        other.weight == weight &&
         other.rating == rating &&
         other.quantity == quantity &&
         other.isOffer == isOffer &&
@@ -125,7 +127,7 @@ class ProductModel {
         imagesUrl.hashCode ^
         name.hashCode ^
         price.hashCode ^
-        nutrition.hashCode ^
+        weight.hashCode ^
         rating.hashCode ^
         quantity.hashCode ^
         isOffer.hashCode ^
