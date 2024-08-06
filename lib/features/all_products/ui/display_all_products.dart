@@ -20,7 +20,7 @@ class DisplayAllProducts extends StatelessWidget {
           } else if (state is DisplatAllProductsLoaded) {
             return _buildGridView(state.products);
           } else if (state is DisplatAllProductsError) {
-            return Center(child: Text(state.message));
+            return Center(child: Text(state.error));
           } else {
             return const Center(child: Text('No products found'));
           }

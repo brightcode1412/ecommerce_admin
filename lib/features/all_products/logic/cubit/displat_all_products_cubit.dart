@@ -19,4 +19,16 @@ class DisplatAllProductsCubit extends Cubit<DisplatAllProductsState> {
       emit(DisplatAllProductsError(e.toString()));
     }
   }
+
+  void deleteProduct(String productId, List<String> imageUrls) async {
+    emit(DisplatAllProductsDeleting());
+    try {
+      await displayAllProductsRepo.deleteProduct(productId, imageUrls);
+      products.removeWhere((product) => product.producttId == productId);
+      emit(DisplatAllProductsDeleted());
+      emit(DisplatAllProductsLoaded(products));
+    } catch (e) {
+      emit(DisplatAllProductsError(e.toString()));
+    }
+  }
 }
