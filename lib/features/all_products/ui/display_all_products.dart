@@ -21,9 +21,7 @@ class DisplayAllProducts extends StatelessWidget {
               return Center(child: Text(state.error));
             }
             state as DisplatAllProductsLoaded;
-            return _buildGridView(state.products, context);
-
-         
+            return Expanded(child: _buildGridView(state.products, context));
           },
         ),
       ),
@@ -91,15 +89,15 @@ class DisplayAllProducts extends StatelessWidget {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          cubit.deleteProduct(
+                        onPressed: () async {
+                          await cubit.deleteProduct(
                               product.producttId, product.imagesUrl);
                           AnimatedSnackBar.material(
                             'Product Deleted',
                             type: AnimatedSnackBarType.success,
                             duration: const Duration(seconds: 2),
                           );
-                          context
+                          await context
                               .read<DisplatAllProductsCubit>()
                               .getAllProducts();
                         },
