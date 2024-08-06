@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:admin_e_commerce/core/services/firebase_error_handler.dart';
 import 'package:admin_e_commerce/core/services/firebase_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:logger/web.dart';
@@ -13,8 +14,19 @@ class AddAdsRepo {
 
   uploadAdsImage(List<String> imagesUrl) async {
     try {
-      _firebaseServices.adsCollection.doc().update({
-        'image': imagesUrl,
+      // Retrieve the existing image URLs
+      DocumentSnapshot docSnapshot = await _firebaseServices.adsCollection
+          .doc('ZTB08dhF2xVhRUyj3ie8')
+          .get();
+      List<dynamic> existingImages = docSnapshot.get('imagesUrl') ?? [];
+
+      // Merge the existing image URLs with the new ones
+      List<String> updatedImages = List<String>.from(existingImages)
+        ..addAll(imagesUrl);
+
+      // Update the document with the merged image URLs
+      await _firebaseServices.adsCollection.doc('ZTB08dhF2xVhRUyj3ie8').update({
+        'imagesUrl': updatedImages,
       });
     } on FirebaseException catch (e) {
       Logger().e('Error in uploadProduct: $e');
@@ -46,7 +58,7 @@ class AddAdsRepo {
       for (var image in images) {
         final ref = storage
             .ref()
-            .child('uploads/${DateTime.now().millisecondsSinceEpoch}.png');
+            .child('ads/${DateTime.now().millisecondsSinceEpoch}.png');
         final uploadTask = ref.putData(image);
 
         uploadTask.snapshotEvents.listen((event) {
