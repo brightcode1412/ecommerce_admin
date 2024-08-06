@@ -10,7 +10,7 @@ class DisplatAllProductsCubit extends Cubit<DisplatAllProductsState> {
 
   List<ProductModel> products = [];
 
-  void getAllProducts() async {
+  getAllProducts() async {
     emit(DisplatAllProductsLoading());
     try {
       products = await displayAllProductsRepo.getAllProducts();
@@ -20,13 +20,12 @@ class DisplatAllProductsCubit extends Cubit<DisplatAllProductsState> {
     }
   }
 
-  void deleteProduct(String productId, List<String> imageUrls) async {
-    emit(DisplatAllProductsDeleting());
+  deleteProduct(String productId, List<String> imageUrls) async {
     try {
       await displayAllProductsRepo.deleteProduct(productId, imageUrls);
       products.removeWhere((product) => product.producttId == productId);
       emit(DisplatAllProductsDeleted());
-      //   emit(DisplatAllProductsLoaded(products));
+      // emit(DisplatAllProductsLoaded(products));
     } catch (e) {
       emit(DisplatAllProductsError(e.toString()));
     }

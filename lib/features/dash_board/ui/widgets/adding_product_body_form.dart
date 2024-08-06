@@ -1,3 +1,4 @@
+import 'package:admin_e_commerce/core/helpers/app_regex.dart';
 import 'package:admin_e_commerce/core/theming/app_color.dart';
 import 'package:admin_e_commerce/core/theming/app_style.dart';
 import 'package:admin_e_commerce/core/widgets/custom_app_button.dart';
@@ -84,7 +85,7 @@ class _AddingProductBodyFormState extends State<AddingProductBodyForm> {
                           labelText: 'Product Quantity',
                           keyboardType: TextInputType.number,
                           validator: (value) {
-                            if (value!.isEmpty) {
+                            if (value!.isEmpty || !AppRegex.hasNumber(value)) {
                               return 'Product Quantity cannot be empty';
                             }
                             return null;
@@ -101,7 +102,7 @@ class _AddingProductBodyFormState extends State<AddingProductBodyForm> {
                           labelText: 'Product Price',
                           keyboardType: TextInputType.number,
                           validator: (value) {
-                            if (value!.isEmpty) {
+                            if (value!.isEmpty || !AppRegex.hasNumber(value)) {
                               return 'Product Price cannot be empty';
                             }
                             return null;
@@ -244,6 +245,13 @@ class _AddingProductBodyFormState extends State<AddingProductBodyForm> {
 
                                   if (_formKey.currentState!.validate()) {
                                     cubit.uploadProduct(product);
+                                    _productNameController.clear();
+                                    _productDescriptionController.clear();
+                                    _productPriceController.clear();
+                                    _productweigthController.clear();
+                                    _productQuantityController.clear();
+                                    _selectedIsOffer = 'false';
+                                    _selectedCategory = 'Vegetable';
                                   }
                                 },
                           child: const Text('Add Product')),
