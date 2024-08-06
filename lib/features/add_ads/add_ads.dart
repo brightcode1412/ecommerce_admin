@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:admin_e_commerce/core/theming/app_color.dart';
 import 'package:admin_e_commerce/core/theming/app_style.dart';
 import 'package:admin_e_commerce/core/widgets/custom_app_button.dart';
-import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:admin_e_commerce/features/add_ads/logic/cubit/add_ads_state.dart';
@@ -37,6 +36,7 @@ class AddAdsScreen extends StatelessWidget {
                     content: Text('Image Upload Failed'),
                   ),
                 );
+                
               }
             },
             builder: (context, state) {
