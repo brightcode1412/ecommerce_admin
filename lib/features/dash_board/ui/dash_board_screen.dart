@@ -41,6 +41,10 @@ class DashBoardScreen extends StatelessWidget {
                               icon: Icon(Icons.production_quantity_limits),
                               label: Text(''),
                             ),
+                            NavigationRailDestination(
+                              icon: Icon(Icons.ads_click),
+                              label: Text(''),
+                            ),
                           ],
                         ),
                       ],

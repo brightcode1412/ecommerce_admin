@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:admin_e_commerce/core/services/failure.dart';
+import 'package:admin_e_commerce/features/add_ads/add_ads.dart';
 import 'package:admin_e_commerce/features/all_products/ui/display_all_products.dart';
 import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
 import 'package:admin_e_commerce/features/dash_board/data/repos/dash_board_repo.dart';
@@ -60,7 +61,11 @@ class DashBoardCubit extends Cubit<DashBoardState> {
     }
   }
 
-  List<Widget> layouts = const [AddingProductBody(), DisplayAllProducts()];
+  List<Widget> layouts = const [
+    AddingProductBody(),
+    DisplayAllProducts(),
+    AddAdsScreen()
+  ];
 
   changeIndex(int index) {
     selectedIndex = index;
