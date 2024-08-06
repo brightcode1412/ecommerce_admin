@@ -32,7 +32,9 @@ final class ImageUploadFailed extends DashBoardState {
   ImageUploadFailed(this.message);
 }
 
-
+final class ChangeIndexState extends DashBoardState {
+  ChangeIndexState();
+}
 
 
 // class ImageState extends DashBoardState {

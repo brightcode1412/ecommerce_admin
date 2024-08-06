@@ -17,97 +17,156 @@ class DashBoardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const CustomAppBarWeb(
-              title: 'Delish Delivery Admin',
-            ),
-            Text(
-              'Add Product',
-              style: AppStyles.eduAUVICWANTHand700(context).copyWith(
-                color: AppColor.blackColor,
-                fontSize: 20,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            BlocConsumer<DashBoardCubit, DashBoardState>(
-              listener: (context, state) {
-                if (state is ImageUploadFailed) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Image Upload Failed'),
-                    ),
-                  );
-                }
-              },
-              builder: (context, state) {
-                var cubit = DashBoardCubit.get(context);
-                return state is ImageLoading
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: AppColor.green75Color,
-                          value: (state).uploadProgress,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const CustomAppBarWeb(
+            title: 'Delish Delivery Admin',
+          ),
+          BlocBuilder<DashBoardCubit, DashBoardState>(
+            builder: (context, state) {
+              var cubit = DashBoardCubit.get(context);
+
+              return Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    NavigationRail(
+                      selectedIndex: cubit.selectedIndex,
+                      onDestinationSelected: cubit.changeIndex,
+                      labelType: NavigationRailLabelType.none,
+                      // selectedIconTheme:
+                      //     const IconThemeData(color: Colors.transparent),
+                      // unselectedIconTheme:
+                      //     const IconThemeData(color: Colors.transparent),
+                      backgroundColor: Colors.transparent,
+                      destinations: const [
+                        NavigationRailDestination(
+                          icon: Icon(Icons.add),
+                          label: Text(''),
                         ),
-                      )
-                    : state is ImageUploadSuccess ||
-                            state is DashBoardUploadProductLoading
-                        ? Center(
-                            child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: cubit.images.map((image) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  radius: 50,
-                                  foregroundImage: MemoryImage(image),
-                                ),
-                              );
-                            }).toList(),
-                          ))
-// default ال
-                        : CustomAppButton(
-                            backgroundColor: state is ImageLoading
-                                ? AppColor.grey64Color
-                                : AppColor.green75Color,
-                            width: MediaQuery.sizeOf(context).width * .1,
-                            height: 36,
-                            onPressed: state is ImageLoading
-                                ? () {}
-                                : () {
-                                    context.read<DashBoardCubit>().pickImages();
-                                  },
-                            child: const Text('Upload Images'));
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const AddingProductBody(),
-          ],
-        ),
+                        NavigationRailDestination(
+                          icon: Icon(Icons.edit),
+                          label: Text('Another Option'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          const VerticalDivider(thickness: 1, width: 1),
+          BlocBuilder<DashBoardCubit, DashBoardState>(
+            builder: (context, state) {
+              var cubit = DashBoardCubit.get(context);
+              if (cubit.selectedIndex == 0) {
+                return const AddingProductBodyForm();
+              } else {
+                return const Center(
+                  child: Text('data'),
+                );
+              }
+            },
+          ),
+        ],
       ),
     );
   }
 }
 
-class AddingProductBody extends StatefulWidget {
+class AddingProductBody extends StatelessWidget {
   const AddingProductBody({super.key});
 
   @override
-  State<AddingProductBody> createState() => _AddingProductBodyState();
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          'Add Product',
+          style: AppStyles.eduAUVICWANTHand700(context).copyWith(
+            color: AppColor.blackColor,
+            fontSize: 20,
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        BlocConsumer<DashBoardCubit, DashBoardState>(
+          listener: (context, state) {
+            if (state is ImageUploadFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Image Upload Failed'),
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            var cubit = DashBoardCubit.get(context);
+            return state is ImageLoading
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColor.green75Color,
+                      value: (state).uploadProgress,
+                    ),
+                  )
+                : state is ImageUploadSuccess ||
+                        state is DashBoardUploadProductLoading
+                    ? Center(
+                        child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: cubit.images.map((image) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              radius: 50,
+                              foregroundImage: MemoryImage(image),
+                            ),
+                          );
+                        }).toList(),
+                      ))
+// default ال
+                    : CustomAppButton(
+                        backgroundColor: state is ImageLoading
+                            ? AppColor.grey64Color
+                            : AppColor.green75Color,
+                        width: MediaQuery.sizeOf(context).width * .1,
+                        height: 36,
+                        onPressed: state is ImageLoading
+                            ? () {}
+                            : () {
+                                context.read<DashBoardCubit>().pickImages();
+                              },
+                        child: const Text('Upload Images'));
+          },
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const AddingProductBody(),
+      ],
+    );
+  }
 }
 
-class _AddingProductBodyState extends State<AddingProductBody> {
+class AddingProductBodyForm extends StatefulWidget {
+  const AddingProductBodyForm({super.key});
+
+  @override
+  State<AddingProductBodyForm> createState() => _AddingProductBodyFormState();
+}
+
+class _AddingProductBodyFormState extends State<AddingProductBodyForm> {
   static final List<String> _categories = [
     'Vegetable',
     'Cooking Oil',
     'Meat & Fish',
     'Bakery & Snacks',
+    'Dairy & Eggs',
     'Beverages',
   ];
 
@@ -279,33 +338,44 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                       : CustomAppButton(
                           borderRadius: 10,
                           width: double.infinity,
+                          backgroundColor: state is ImageLoading
+                              ? Colors.transparent
+                              : AppColor.green75Color,
                           height: 55,
-                          child: const Text('Add Product'),
-                          onPressed: () {
-                            ProductModel product = ProductModel(
-                              isOffer:
-                                  _selectedIsOffer == 'true' ? true : false,
+                          onPressed: state is ImageLoading
+                              ? () {
+                                  debugPrint(
+                                      'Update cancelled, not proceeding.');
+                                }
+                              : () {
+                                  ProductModel product = ProductModel(
+                                    isOffer: _selectedIsOffer == 'true'
+                                        ? true
+                                        : false,
 
-                              imagesUrl: [],
-                              name: _productNameController.text.trim(),
-                              description:
-                                  _productDescriptionController.text.trim(),
-                              price: _productPriceController.text.trim(),
-                              nutrition:
-                                  _productNutritionController.text.trim(),
-                              rating: 1.0,
-                              quantity: _productQuantityController.text.trim(),
-                              // isBestSeller: true,
-                              purchaseCount: 1,
-                              producttId: '',
-                              categoryName: _selectedCategory,
-                              // _productCategoryNameController.text.trim(),
-                            );
+                                    imagesUrl: [],
+                                    name: _productNameController.text.trim(),
+                                    description: _productDescriptionController
+                                        .text
+                                        .trim(),
+                                    price: _productPriceController.text.trim(),
+                                    nutrition:
+                                        _productNutritionController.text.trim(),
+                                    rating: 1.0,
+                                    quantity:
+                                        _productQuantityController.text.trim(),
+                                    // isBestSeller: true,
+                                    purchaseCount: 1,
+                                    producttId: '',
+                                    categoryName: _selectedCategory,
+                                    // _productCategoryNameController.text.trim(),
+                                  );
 
-                            if (_formKey.currentState!.validate()) {
-                              cubit.uploadProduct(product);
-                            }
-                          }),
+                                  if (_formKey.currentState!.validate()) {
+                                    cubit.uploadProduct(product);
+                                  }
+                                },
+                          child: const Text('Add Product')),
                 ],
               ),
             ),
