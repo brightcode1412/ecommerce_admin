@@ -39,7 +39,6 @@ class _AddingProductBodyState extends State<AddingProductBody> {
   final _productWeightController = TextEditingController();
   final _productQuantityController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -61,6 +60,7 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                 children: [
                   Row(
                     children: [
+                      // product name
                       Expanded(
                         child: CustomTextFromFieldText(
                           controller: _productNameController,
@@ -74,6 +74,7 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                         ),
                       ),
                       const SizedBox(width: 20),
+                      // description
                       Expanded(
                         child: CustomTextFromFieldText(
                           controller: _productDescriptionController,
@@ -90,6 +91,7 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                   ),
                   Row(
                     children: [
+                      // price
                       Expanded(
                         child: CustomTextFromFieldText(
                           controller: _productPriceController,
@@ -104,6 +106,7 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                         ),
                       ),
                       const SizedBox(width: 20),
+                      // weight
                       Expanded(
                         child: CustomTextFromFieldText(
                           controller: _productWeightController,
@@ -120,6 +123,7 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                   ),
                   Row(
                     children: [
+                      // quantity
                       Expanded(
                         child: CustomTextFromFieldText(
                           controller: _productQuantityController,
@@ -133,7 +137,49 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                           },
                         ),
                       ),
-                      const SizedBox(width: 20),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Is Offer :   ',
+                        style: AppStyles.eduAUVICWANTHand700(context)
+                            .copyWith(color: AppColor.blackColor, fontSize: 16),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: DropdownButton<String>(
+                          value: _selectedIsOffer,
+                          hint: const Text('Is Offer'),
+                          items: _booleanOptions.map((String option) {
+                            return DropdownMenuItem<String>(
+                              value: option,
+                              child: Text(option),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedIsOffer = newValue!;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Category :   ',
+                        style: AppStyles.eduAUVICWANTHand700(context)
+                            .copyWith(color: AppColor.blackColor, fontSize: 16),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      // category
                       Expanded(
                         child: DropdownButton<String>(
                           value: _selectedCategory,
@@ -153,34 +199,6 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                           },
                           isExpanded: true,
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Is Offer :   ',
-                        style: AppStyles.eduAUVICWANTHand700(context)
-                            .copyWith(color: AppColor.blackColor, fontSize: 16),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      DropdownButton<String>(
-                        value: _selectedIsOffer,
-                        hint: const Text('Is Offer'),
-                        items: _booleanOptions.map((String option) {
-                          return DropdownMenuItem<String>(
-                            value: option,
-                            child: Text(option),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedIsOffer = newValue!;
-                          });
-                        },
                       ),
                     ],
                   ),
@@ -219,6 +237,7 @@ class _AddingProductBodyState extends State<AddingProductBody> {
                                     // isBestSeller: true,
                                     purchaseCount: 1,
                                     producttId: '',
+                                    
                                     categoryName: _selectedCategory,
                                     // _productCategoryNameController.text.trim(),
                                   );

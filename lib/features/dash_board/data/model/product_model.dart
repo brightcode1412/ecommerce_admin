@@ -11,7 +11,8 @@ class ProductModel {
   final String weight;
   final num rating;
   final String quantity;
-  // final bool isBestSeller;
+  final int ratingCount;
+
   final bool isOffer;
   final num purchaseCount;
   final String producttId;
@@ -29,6 +30,7 @@ class ProductModel {
     required this.purchaseCount,
     required this.producttId,
     required this.categoryName,
+    this.ratingCount = 0,
   });
 
   ProductModel copyWith({
