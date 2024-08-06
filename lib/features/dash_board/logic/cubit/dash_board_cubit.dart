@@ -15,24 +15,22 @@ class DashBoardCubit extends Cubit<DashBoardState> {
   static DashBoardCubit get(context) => BlocProvider.of(context);
   List<String> uploadedUrls = [];
   List<Uint8List> images = [];
-
+  int selectedIndex = 0;
   void uploadProduct(ProductModel productmodel) async {
     emit(DashBoardUploadProductLoading());
     try {
-      if (uploadedUrls.isEmpty ) {
-          emit(DashBoardUploadProductFailed(error: 'No images uploaded'));
-        } else {
-          await _repository.uploadProduct(productmodel.copyWith(
-            imagesUrl: uploadedUrls,
-          ));
+      if (uploadedUrls.isEmpty) {
+        emit(DashBoardUploadProductFailed(error: 'No images uploaded'));
+      } else {
+        await _repository.uploadProduct(productmodel.copyWith(
+          imagesUrl: uploadedUrls,
+        ));
 
-          emit(DashBoardUploadProductSuccess());
-        }
-
-      } on Failure catch (e) {
-        emit(DashBoardUploadProductFailed(error: e.toString()));
-      
-    } 
+        emit(DashBoardUploadProductSuccess());
+      }
+    } on Failure catch (e) {
+      emit(DashBoardUploadProductFailed(error: e.toString()));
+    }
   }
 
   pickImages() async {
@@ -59,9 +57,11 @@ class DashBoardCubit extends Cubit<DashBoardState> {
     }
   }
 
-
-  
-
+  changeIndex(int index) {
+    selectedIndex = index;
+    emit(ChangeIndexState());
+  }
+}
   // void uploadImages(List<Uint8List> images) async {
   //   emit(ImageLoading(0));
   //   try {
@@ -73,4 +73,3 @@ class DashBoardCubit extends Cubit<DashBoardState> {
   //     emit(ImageUploadFailed(e.toString()));
   //   }
   // }
-}
