@@ -22,7 +22,7 @@ class AppRouter {
       case Routes.displayProductScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => DisplatAllProductsCubit(),
+            create: (context) => DisplatAllProductsCubit()..getAllProducts(),
             child: const DisplayAllProducts(),
           ),
         );

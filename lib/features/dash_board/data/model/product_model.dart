@@ -26,11 +26,11 @@ class ProductModel {
     required this.weight,
     required this.rating,
     required this.quantity,
+    required this.ratingCount,
     required this.isOffer,
     required this.purchaseCount,
     required this.producttId,
     required this.categoryName,
-    this.ratingCount = 0,
   });
 
   ProductModel copyWith({
@@ -41,6 +41,7 @@ class ProductModel {
     String? weight,
     num? rating,
     String? quantity,
+    int? ratingCount,
     bool? isOffer,
     num? purchaseCount,
     String? producttId,
@@ -54,6 +55,7 @@ class ProductModel {
       weight: weight ?? this.weight,
       rating: rating ?? this.rating,
       quantity: quantity ?? this.quantity,
+      ratingCount: ratingCount ?? this.ratingCount,
       isOffer: isOffer ?? this.isOffer,
       purchaseCount: purchaseCount ?? this.purchaseCount,
       producttId: producttId ?? this.producttId,
@@ -70,6 +72,7 @@ class ProductModel {
       'weight': weight,
       'rating': rating,
       'quantity': quantity,
+      'ratingCount': ratingCount,
       'isOffer': isOffer,
       'purchaseCount': purchaseCount,
       'producttId': producttId,
@@ -86,6 +89,7 @@ class ProductModel {
       weight: map['weight'] as String,
       rating: map['rating'] as num,
       quantity: map['quantity'] as String,
+      ratingCount: map['ratingCount'] as int,
       isOffer: map['isOffer'] as bool,
       purchaseCount: map['purchaseCount'] as num,
       producttId: map['producttId'] as String,
@@ -101,7 +105,7 @@ class ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(description: $description, imagesUrl: $imagesUrl, name: $name, price: $price, weight: $weight, rating: $rating, quantity: $quantity, isOffer: $isOffer, purchaseCount: $purchaseCount, producttId: $producttId, categoryName: $categoryName)';
+    return 'ProductModel(description: $description, imagesUrl: $imagesUrl, name: $name, price: $price, weight: $weight, rating: $rating, quantity: $quantity, ratingCount: $ratingCount, isOffer: $isOffer, purchaseCount: $purchaseCount, producttId: $producttId, categoryName: $categoryName)';
   }
 
   @override
@@ -115,6 +119,7 @@ class ProductModel {
         other.weight == weight &&
         other.rating == rating &&
         other.quantity == quantity &&
+        other.ratingCount == ratingCount &&
         other.isOffer == isOffer &&
         other.purchaseCount == purchaseCount &&
         other.producttId == producttId &&
@@ -130,6 +135,7 @@ class ProductModel {
         weight.hashCode ^
         rating.hashCode ^
         quantity.hashCode ^
+        ratingCount.hashCode ^
         isOffer.hashCode ^
         purchaseCount.hashCode ^
         producttId.hashCode ^

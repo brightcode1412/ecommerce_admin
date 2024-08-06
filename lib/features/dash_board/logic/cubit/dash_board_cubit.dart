@@ -1,9 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:admin_e_commerce/core/services/failure.dart';
+import 'package:admin_e_commerce/features/all_products/ui/display_all_products.dart';
 import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
 import 'package:admin_e_commerce/features/dash_board/data/repos/dash_board_repo.dart';
 import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_state.dart';
+import 'package:admin_e_commerce/features/dash_board/ui/widgets/adding_product_body.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/web.dart';
@@ -56,6 +59,8 @@ class DashBoardCubit extends Cubit<DashBoardState> {
       }
     }
   }
+
+  List<Widget> layouts = const [AddingProductBody(), DisplayAllProducts()];
 
   changeIndex(int index) {
     selectedIndex = index;

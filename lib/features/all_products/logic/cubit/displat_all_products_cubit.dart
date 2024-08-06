@@ -26,7 +26,7 @@ class DisplatAllProductsCubit extends Cubit<DisplatAllProductsState> {
       await displayAllProductsRepo.deleteProduct(productId, imageUrls);
       products.removeWhere((product) => product.producttId == productId);
       emit(DisplatAllProductsDeleted());
-      emit(DisplatAllProductsLoaded(products));
+      //   emit(DisplatAllProductsLoaded(products));
     } catch (e) {
       emit(DisplatAllProductsError(e.toString()));
     }
