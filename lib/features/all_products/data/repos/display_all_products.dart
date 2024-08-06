@@ -32,6 +32,33 @@ class DisplayAllProductsRepo {
   //   }
   // }
 
+  // Future<void> deleteProduct(String productId, List<String> imageUrls) async {
+  //   try {
+  //     // Delete the product document from Firestore
+  //     await _firebaseServices.productsCollection.doc(productId).delete();
+
+  //     // Delete each image from Firebase Storage
+  //     for (String imageUrl in imageUrls) {
+  //       await deleteImageFromFirebase(imageUrl);
+  //     }
+
+  //     // Query and delete documents from the user's cart sub-collection
+  //     QuerySnapshot userSnapshots =
+  //         await _firebaseServices.userCollection.get();
+  //     for (QueryDocumentSnapshot userDoc in userSnapshots.docs) {
+  //       QuerySnapshot cartSnapshot = await userDoc.reference
+  //           .collection('cart')
+  //           .where('productId', isEqualTo: productId)
+  //           .get();
+  //       for (QueryDocumentSnapshot cartDoc in cartSnapshot.docs) {
+  //         await cartDoc.reference.delete();
+  //       }
+  //     }
+  //   } on FirebaseException catch (e) {
+  //     throw FirebaseNetworkException.errorHandler(e);
+  //   }
+  // }
+
   Future<void> deleteProduct(String productId, List<String> imageUrls) async {
     try {
       // Delete the product document from Firestore
@@ -46,12 +73,22 @@ class DisplayAllProductsRepo {
       QuerySnapshot userSnapshots =
           await _firebaseServices.userCollection.get();
       for (QueryDocumentSnapshot userDoc in userSnapshots.docs) {
+        // Delete from cart collection
         QuerySnapshot cartSnapshot = await userDoc.reference
             .collection('cart')
             .where('productId', isEqualTo: productId)
             .get();
         for (QueryDocumentSnapshot cartDoc in cartSnapshot.docs) {
           await cartDoc.reference.delete();
+        }
+
+        // Delete from favourite collection
+        QuerySnapshot favouriteSnapshot = await userDoc.reference
+            .collection('favourite')
+            .where('productId', isEqualTo: productId)
+            .get();
+        for (QueryDocumentSnapshot favouriteDoc in favouriteSnapshot.docs) {
+          await favouriteDoc.reference.delete();
         }
       }
     } on FirebaseException catch (e) {
