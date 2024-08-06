@@ -31,10 +31,17 @@ class AddingProductBody extends StatelessWidget {
           ),
           BlocConsumer<DashBoardCubit, DashBoardState>(
             listener: (context, state) {
-              if (state is ImageUploadFailed) {
+              if (state is DashBoardUploadProductFailed) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Image Upload Failed'),
+                  ),
+                );
+              }
+              if (state is DashBoardUploadProductSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Product Added Successfully'),
                   ),
                 );
               }
