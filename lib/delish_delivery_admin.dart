@@ -14,7 +14,7 @@ class DelishDeliveryAdmin extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.dashBoardScreen,
+      initialRoute: Routes.adaptiveLayoutScreen,
       onGenerateRoute: AppRouter().generateRoute,
     );
   }

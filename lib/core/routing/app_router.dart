@@ -1,3 +1,4 @@
+import 'package:admin_e_commerce/adaptive_layout.dart';
 import 'package:admin_e_commerce/core/routing/routes.dart';
 import 'package:admin_e_commerce/features/all_products/logic/cubit/displat_all_products_cubit.dart';
 import 'package:admin_e_commerce/features/all_products/ui/display_all_products.dart';
@@ -24,6 +25,25 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (context) => DisplatAllProductsCubit()..getAllProducts(),
             child: const DisplayAllProducts(),
+          ),
+        );
+
+      case Routes.adaptiveLayoutScreen:
+        return MaterialPageRoute(
+          builder: (_) => AdaptiveLayout(
+            mobileLayout: (context) {
+              return BlocProvider(
+                create: (context) =>
+                    DisplatAllProductsCubit()..getAllProducts(),
+                child: const DisplayAllProducts(),
+              );
+            },
+            webLayout: (context) {
+              return BlocProvider(
+                create: (context) => DashBoardCubit(),
+                child: const DashBoardScreen(),
+              );
+            },
           ),
         );
     }
