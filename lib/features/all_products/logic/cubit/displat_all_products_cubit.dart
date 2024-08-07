@@ -1,6 +1,6 @@
+import 'package:admin_e_commerce/features/add_products/data/model/product_model.dart';
 import 'package:admin_e_commerce/features/all_products/data/repos/display_all_products.dart';
 import 'package:admin_e_commerce/features/all_products/logic/cubit/displat_all_products_state.dart';
-import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DisplatAllProductsCubit extends Cubit<DisplatAllProductsState> {

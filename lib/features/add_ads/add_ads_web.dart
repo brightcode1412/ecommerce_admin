@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:admin_e_commerce/features/add_ads/logic/cubit/add_ads_state.dart';
 
-class AddAdsScreen extends StatelessWidget {
-  const AddAdsScreen({super.key});
+class AddAdsWebScreen extends StatelessWidget {
+  const AddAdsWebScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +16,10 @@ class AddAdsScreen extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * .1,
+            height: MediaQuery.of(context).size.height * .3,
           ),
           Text(
-            'Adds',
+            'Adding Adds',
             style: AppStyles.eduAUVICWANTHand700(context).copyWith(
               color: AppColor.blackColor,
               fontSize: 20,
@@ -36,7 +36,6 @@ class AddAdsScreen extends StatelessWidget {
                     content: Text('Image Upload Failed'),
                   ),
                 );
-                
               }
             },
             builder: (context, state) {

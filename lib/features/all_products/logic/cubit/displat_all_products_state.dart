@@ -1,4 +1,4 @@
-import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
+import 'package:admin_e_commerce/features/add_products/data/model/product_model.dart';
 
 abstract class DisplatAllProductsState {}
 

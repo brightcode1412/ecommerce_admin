@@ -1,6 +1,6 @@
 import 'package:admin_e_commerce/core/services/firebase_error_handler.dart';
 import 'package:admin_e_commerce/core/services/firebase_services.dart';
-import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
+import 'package:admin_e_commerce/features/add_products/data/model/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -19,45 +19,6 @@ class DisplayAllProductsRepo {
     }
   }
 
-  // Future<void> deleteProduct(String productId, List<String> imageUrls) async {
-  //   try {
-  //     // Delete the product document from Firestore
-  //     await _firebaseServices.productsCollection.doc(productId).delete();
-  //     imageUrls.forEach((imageUrl) async {
-  //       await deleteImageFromFirebase(imageUrl);
-  //     });
-
-  //   } on FirebaseException catch (e) {
-  //     throw FirebaseNetworkException.errorHandler(e);
-  //   }
-  // }
-
-  // Future<void> deleteProduct(String productId, List<String> imageUrls) async {
-  //   try {
-  //     // Delete the product document from Firestore
-  //     await _firebaseServices.productsCollection.doc(productId).delete();
-
-  //     // Delete each image from Firebase Storage
-  //     for (String imageUrl in imageUrls) {
-  //       await deleteImageFromFirebase(imageUrl);
-  //     }
-
-  //     // Query and delete documents from the user's cart sub-collection
-  //     QuerySnapshot userSnapshots =
-  //         await _firebaseServices.userCollection.get();
-  //     for (QueryDocumentSnapshot userDoc in userSnapshots.docs) {
-  //       QuerySnapshot cartSnapshot = await userDoc.reference
-  //           .collection('cart')
-  //           .where('productId', isEqualTo: productId)
-  //           .get();
-  //       for (QueryDocumentSnapshot cartDoc in cartSnapshot.docs) {
-  //         await cartDoc.reference.delete();
-  //       }
-  //     }
-  //   } on FirebaseException catch (e) {
-  //     throw FirebaseNetworkException.errorHandler(e);
-  //   }
-  // }
 
   Future<void> deleteProduct(String productId, List<String> imageUrls) async {
     try {

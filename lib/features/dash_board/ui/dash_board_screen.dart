@@ -52,7 +52,8 @@ class DashBoardScreen extends StatelessWidget {
 
                     const VerticalDivider(thickness: 1, width: 1),
                     Expanded(
-                        flex: 3, child: cubit.layouts[cubit.selectedIndex]),
+                        flex: 3,
+                        child: cubit.dashBoardScreens[cubit.selectedIndex]),
                     // Spacer()
                   ],
                 ),

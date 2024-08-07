@@ -2,13 +2,13 @@ import 'dart:typed_data';
 
 import 'package:admin_e_commerce/core/services/firebase_error_handler.dart';
 import 'package:admin_e_commerce/core/services/firebase_services.dart';
-import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
+import 'package:admin_e_commerce/features/add_products/data/model/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:logger/web.dart';
 
-class HomeRepo {
+class AddProductRepo {
   final FirebaseStorage storage = FirebaseStorage.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 

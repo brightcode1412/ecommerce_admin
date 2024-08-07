@@ -2,22 +2,24 @@ import 'package:admin_e_commerce/core/helpers/app_regex.dart';
 import 'package:admin_e_commerce/core/theming/app_color.dart';
 import 'package:admin_e_commerce/core/theming/app_style.dart';
 import 'package:admin_e_commerce/core/widgets/custom_app_button.dart';
-import 'package:admin_e_commerce/features/dash_board/data/model/product_model.dart';
-import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_cubit.dart';
-import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_state.dart';
-import 'package:admin_e_commerce/features/dash_board/ui/widgets/custom_text_form_field_text.dart';
+import 'package:admin_e_commerce/features/add_products/data/model/product_model.dart';
+import 'package:admin_e_commerce/features/add_products/logic/cubit/add_products_cubit.dart';
+import 'package:admin_e_commerce/features/add_products/logic/cubit/add_products_state.dart';
+import 'package:admin_e_commerce/features/add_products/ui/widgets/custom_text_form_field_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/web.dart';
 
-class AddingProductBodyForm extends StatefulWidget {
-  const AddingProductBodyForm({super.key});
+class AddingProductBodyFormMobile extends StatefulWidget {
+  const AddingProductBodyFormMobile({super.key});
 
   @override
-  State<AddingProductBodyForm> createState() => _AddingProductBodyFormState();
+  State<AddingProductBodyFormMobile> createState() =>
+      _AddingProductBodyFormMobileState();
 }
 
-class _AddingProductBodyFormState extends State<AddingProductBodyForm> {
+class _AddingProductBodyFormMobileState
+    extends State<AddingProductBodyFormMobile> {
   static final List<String> _categories = [
     'Vegetable',
     'Cooking Oil',
@@ -38,30 +40,19 @@ class _AddingProductBodyFormState extends State<AddingProductBodyForm> {
   final _productDescriptionController = TextEditingController();
   final _productPriceController = TextEditingController();
   final _productweigthController = TextEditingController();
-  // final _productRatingController = TextEditingController();
   final _productQuantityController = TextEditingController();
-  // final _productIsBestSellerController = TextEditingController();
-  // final _productPurchaseCountController = TextEditingController();
-  // final _productProductIdController = TextEditingController();
-  // final _productCategoryNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    //  var height = MediaQuery.of(context).size.height;
-    return BlocBuilder<DashBoardCubit, DashBoardState>(
+    // var width = MediaQuery.of(context).size.width;
+    return BlocBuilder<AddProductsCubit, AddProductsState>(
       builder: (context, state) {
-        var cubit = context.read<DashBoardCubit>();
+        var cubit = context.read<AddProductsCubit>();
         return Form(
           key: _formKey,
-          child: Container(
-            width: width * 0.4,
-            //   height: height * 0.7,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColor.green75Color),
-            ),
-            child: SingleChildScrollView(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
               child: Column(
                 children: [
                   Row(
@@ -204,7 +195,7 @@ class _AddingProductBodyFormState extends State<AddingProductBodyForm> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  state is DashBoardUploadProductLoading
+                  state is UploadProductLoading
                       ? const CircularProgressIndicator()
                       : CustomAppButton(
                           borderRadius: 10,
@@ -224,7 +215,6 @@ class _AddingProductBodyFormState extends State<AddingProductBodyForm> {
                                     isOffer: _selectedIsOffer == 'true'
                                         ? true
                                         : false,
-
                                     imagesUrl: [],
                                     name: _productNameController.text.trim(),
                                     description: _productDescriptionController
@@ -236,11 +226,9 @@ class _AddingProductBodyFormState extends State<AddingProductBodyForm> {
                                     rating: 1.0,
                                     quantity:
                                         _productQuantityController.text.trim(),
-                                    // isBestSeller: true,
                                     purchaseCount: 1,
                                     producttId: '',
                                     categoryName: _selectedCategory,
-                                    // _productCategoryNameController.text.trim(),
                                   );
 
                                   if (_formKey.currentState!.validate()) {

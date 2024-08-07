@@ -1,15 +1,16 @@
 import 'package:admin_e_commerce/core/theming/app_color.dart';
 import 'package:admin_e_commerce/core/theming/app_style.dart';
 import 'package:admin_e_commerce/core/widgets/custom_app_button.dart';
-import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_cubit.dart';
-import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_state.dart';
-import 'package:admin_e_commerce/features/dash_board/ui/widgets/adding_product_body_form.dart';
+import 'package:admin_e_commerce/features/add_products/logic/cubit/add_products_cubit.dart';
+import 'package:admin_e_commerce/features/add_products/logic/cubit/add_products_state.dart';
+import 'package:admin_e_commerce/features/add_products/ui/widgets/adding_product_body_from_mobile.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class AddingProductBody extends StatelessWidget {
-  const AddingProductBody({super.key});
+class AddingProductMobileLayout extends StatelessWidget {
+  const AddingProductMobileLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +30,13 @@ class AddingProductBody extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          BlocConsumer<DashBoardCubit, DashBoardState>(
+          BlocConsumer<AddProductsCubit, AddProductsState>(
             listener: (context, state) {
-              if (state is DashBoardUploadProductFailed) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Image Upload Failed'),
-                  ),
-                );
+              if (state is UploadProductFailed) {
+                AnimatedSnackBar.material('Add Products',
+                    type: AnimatedSnackBarType.success);
               }
-              if (state is DashBoardUploadProductSuccess) {
+              if (state is UploadProductSuccess) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Product Added Successfully'),
@@ -47,7 +45,7 @@ class AddingProductBody extends StatelessWidget {
               }
             },
             builder: (context, state) {
-              var cubit = DashBoardCubit.get(context);
+              var cubit = AddProductsCubit.get(context);
               return state is ImageLoading
                   ? CircularPercentIndicator(
                       radius: 60.0,
@@ -65,8 +63,7 @@ class AddingProductBody extends StatelessWidget {
                       animation: true,
                       animationDuration: 1200,
                     )
-                  : state is ImageUploadSuccess ||
-                          state is DashBoardUploadProductLoading
+                  : state is ImageUploadSuccess || state is UploadProductLoading
                       ? Center(
                           child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +89,7 @@ class AddingProductBody extends StatelessWidget {
                           onPressed: state is ImageLoading
                               ? () {}
                               : () {
-                                  context.read<DashBoardCubit>().pickImages();
+                                  context.read<AddProductsCubit>().pickImages();
                                 },
                           child: const Text('Upload Images'));
             },
@@ -100,7 +97,7 @@ class AddingProductBody extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const AddingProductBodyForm(),
+          const AddingProductBodyFormMobile(),
         ],
       ),
     );

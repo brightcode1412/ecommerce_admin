@@ -2,6 +2,8 @@ import 'package:admin_e_commerce/adaptive_layout.dart';
 import 'package:admin_e_commerce/core/routing/routes.dart';
 import 'package:admin_e_commerce/features/all_products/logic/cubit/displat_all_products_cubit.dart';
 import 'package:admin_e_commerce/features/all_products/ui/display_all_products.dart';
+import 'package:admin_e_commerce/features/app_layout/logic/app_layout_cubit/app_layout_cubit.dart';
+import 'package:admin_e_commerce/features/app_layout/ui/app_layout.dart';
 import 'package:admin_e_commerce/features/dash_board/logic/cubit/dash_board_cubit.dart';
 import 'package:admin_e_commerce/features/dash_board/ui/dash_board_screen.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +35,8 @@ class AppRouter {
           builder: (_) => AdaptiveLayout(
             mobileLayout: (context) {
               return BlocProvider(
-                create: (context) =>
-                    DisplatAllProductsCubit()..getAllProducts(),
-                child: const DisplayAllProducts(),
+                create: (context) => AppLayoutCubit(),
+                child: const AppLayout(),
               );
             },
             webLayout: (context) {
